@@ -15,9 +15,10 @@ It adds a page of todos to the blog administration, sorted in lists named by a s
 Todos belong to a blog and are shared by the users of this blog who have the permission of the plugin.
 Nothing is shown on the public side of the blog.
 
-**This is an early version.** A link with the plugin [ClaudetteMcp](https://github.com/JcDenis/ClaudetteMcp) is planned,
-to let an AI assistant connected to the blog read and complete the lists.
-See [CONCEPTION.md](CONCEPTION.md) (in French) for the design.
+With the plugin [ClaudetteMcp](https://github.com/JcDenis/ClaudetteMcp), an AI assistant connected to the blog
+can read and complete the lists.
+
+**This is an early version.** See [CONCEPTION.md](CONCEPTION.md) (in French) for the design.
 
 ## REQUIREMENTS
 
@@ -37,6 +38,22 @@ A list is created by adding a first todo to it and disappears with its last todo
 
 Selected todos can be marked as done or to do, moved to another list, or deleted.
 Renaming a list moves all its todos; with the name of another list, both lists are merged.
+
+## AI ASSISTANT
+
+If the plugin [ClaudetteMcp](https://github.com/JcDenis/ClaudetteMcp) is enabled on the blog, _PenseBete_ adds these tools to its connector:
+
+| Tool | Description |
+|---|---|
+| `list_todos` | Get the lists of the blog and their todos, by list, status or search |
+| `add_todo` | Add a todo to a list |
+| `update_todo` | Mark a todo as done or to do, change its title or its note, move it to another list |
+
+The assistant acts with the permissions of the user of the key: this user needs the permission "manage todo lists".
+Writing tools are not available with a read only key.
+No tool deletes a todo: asked to delete one, the assistant marks it as done, and deleting is done from the blog administration.
+
+ClaudetteMcp is not required. After installing or updating _PenseBete_, reconnect the connector of the assistant to validate the new tools.
 
 ## LINKS
 

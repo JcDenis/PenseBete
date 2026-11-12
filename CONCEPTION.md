@@ -1,7 +1,7 @@
 # PenseBete — Conception
 
 Document de conception du plugin Dotclear **PenseBete**.
-État au 12 novembre 2026 : étape 1 codée (le plugin seul), la liaison avec ClaudetteMcp reste à faire.
+État au 12 novembre 2026 : étapes 1 et 2 codées (le plugin et sa liaison avec ClaudetteMcp), aucune release.
 
 ## Objectif
 
@@ -124,6 +124,10 @@ Règles :
 * Les dates sont dans le fuseau de l'utilisateur, comme pour les autres outils.
 * Noms et descriptions des outils en anglais, non traduits : ils sont lus par l'assistant.
 * Les noms ne doivent pas reprendre celui d'un outil de ClaudetteMcp, qui garde le premier outil déclaré sous un nom.
+* `add_todo` indique dans sa réponse si la tâche a créé une nouvelle liste (`new_list`), pour que l'assistant le signale.
+* Un titre trop long est refusé plutôt que coupé, et une liste inconnue de `list_todos` n'est pas une erreur :
+  la réponse donne toujours les listes existantes.
+* Les messages d'erreur destinés à l'assistant sont en anglais, comme les descriptions.
 
 ## Étapes
 
