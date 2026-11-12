@@ -1,7 +1,7 @@
 # PenseBete — Conception
 
 Document de conception du plugin Dotclear **PenseBete**.
-État au 13 novembre 2026 : étapes 1 et 2 codées (le plugin et sa liaison avec ClaudetteMcp), tableau de bord ajouté, aucune release.
+État au 13 novembre 2026 : version 0.1, étapes 1 à 3 codées (le plugin, sa liaison avec ClaudetteMcp, le tableau de bord).
 
 ## Objectif
 
