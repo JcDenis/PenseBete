@@ -26,7 +26,6 @@ use Dotclear\Helper\Html\Form\Summary;
 use Dotclear\Helper\Html\Form\Table;
 use Dotclear\Helper\Html\Form\Tbody;
 use Dotclear\Helper\Html\Form\Td;
-use Dotclear\Helper\Html\Form\Text;
 use Dotclear\Helper\Html\Form\Th;
 use Dotclear\Helper\Html\Form\Thead;
 use Dotclear\Helper\Html\Form\Tr;
@@ -64,7 +63,7 @@ class Manage
     private static ManageVars $vars;
 
     /**
-     * Edit a todo rather than show the lists.
+     * Show the form of a todo rather than the list.
      */
     private static bool $edit = false;
 
@@ -72,7 +71,7 @@ class Manage
     {
         if (self::status(My::checkContext(My::MANAGE))) {
             self::$vars = new ManageVars();
-            self::$edit = self::$vars->id > 0 && ManageTodo::init();
+            self::$edit = (self::$vars->id > 0 || self::$vars->new) && ManageTodo::init();
         }
 
         return self::status();
@@ -91,14 +90,6 @@ class Manage
         $vars = self::$vars;
 
         try {
-            // Add a todo
-            if (isset($_POST['add'])) {
-                $todo = Todos::add(ManageVars::post('todo_title'), ManageVars::post('todo_list'));
-
-                App::backend()->notices()->addSuccessNotice(sprintf(__('Todo added to the list "%s".'), Html::escapeHTML($todo->list)));
-                My::redirect($vars->params());
-            }
-
             // Change the status of one todo, from the button of its line
             foreach (['done' => Todos::STATUS_DONE, 'undone' => Todos::STATUS_TODO] as $name => $status) {
                 if (isset($_POST[$name]) && is_array($_POST[$name])) {
@@ -212,8 +203,16 @@ class Manage
             My::name()                            => '',
         ]) .
         App::backend()->notices()->getNotices() .
+        (new Para())
+            ->class('new-stuff')
+            ->items([
+                (new Link())
+                    ->class(['button', 'add'])
+                    ->href(My::manageUrl([... $vars->params(), 'new' => 1]))
+                    ->text(__('New todo')),
+            ])
+            ->render() .
         self::datalist($lists)->render() .
-        self::addForm()->render() .
         self::filterForm($lists)->render();
 
         if ($todos === []) {
@@ -273,43 +272,6 @@ class Manage
             ->maxlength(Todos::LIST_LENGTH)
             ->list(self::DATALIST)
             ->value(Html::escapeHTML($value));
-    }
-
-    private static function addForm(): Form
-    {
-        return (new Form('todo-add-form'))
-            ->method('post')
-            ->action(My::manageUrl(self::$vars->params()))
-            ->class('fieldset')
-            ->fields([
-                (new Text('h3', __('Add a todo'))),
-                (new Para())
-                    ->items([
-                        (new Input('todo_title'))
-                            ->class('maximal')
-                            ->maxlength(Todos::TITLE_LENGTH)
-                            ->required(true)
-                            ->label((new Label(__('To do:'), Label::OL_TF))),
-                    ]),
-                (new Para())
-                    ->items([
-                        self::listInput('todo_list', self::$vars->list)
-                            ->placeholder(Todos::DEFAULT_LIST)
-                            ->label((new Label(__('List:'), Label::OL_TF))),
-                    ]),
-                (new Note())
-                    ->class('form-note')
-                    ->text(sprintf(
-                        __('A list is a single word. A new word creates a new list, without word the todo goes to the list "%s".'),
-                        Todos::DEFAULT_LIST
-                    )),
-                (new Para())
-                    ->class('form-buttons')
-                    ->items([
-                        (new Submit('add', __('Add'))),
-                        ... My::hiddenFields(),
-                    ]),
-            ]);
     }
 
     /**

@@ -30,9 +30,6 @@ msgstr "Une liste est un simple mot. Un nouveau mot crée une nouvelle liste, sa
 msgid "A list name is a single word of %s characters at most, made of letters, digits, \"-\" and \"_\"."
 msgstr "Un nom de liste est un seul mot de %s caractères au plus, fait de lettres, de chiffres, de « - » et de « _ »."
 
-msgid "Add a todo"
-msgstr "Ajouter une tâche"
-
 msgid "Added by"
 msgstr "Ajoutée par"
 
@@ -95,6 +92,9 @@ msgstr "Déplacer dans la liste"
 
 msgid "New name:"
 msgstr "Nouveau nom :"
+
+msgid "New todo"
+msgstr "Nouvelle tâche"
 
 msgid "No todo matches the filter."
 msgstr "Aucune tâche ne correspond au filtre."

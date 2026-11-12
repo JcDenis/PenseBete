@@ -20,10 +20,10 @@ use Dotclear\Helper\Process\TraitProcess;
 use Exception;
 
 /**
- * @brief       PenseBete todo edition.
+ * @brief       PenseBete todo form.
  * @ingroup     PenseBete
  *
- * This page is called by the manage page.
+ * Create or edit a todo. This page is called by the manage page.
  *
  * @author      Jean-Christian Paul Denis
  * @copyright   AGPL-3.0
@@ -34,13 +34,16 @@ class ManageTodo
 
     private static ManageVars $vars;
 
+    /**
+     * The edited todo, null for a new one (or an unknown one).
+     */
     private static ?Todo $todo = null;
 
     public static function init(): bool
     {
         if (self::status(My::checkContext(My::MANAGE))) {
             self::$vars = new ManageVars();
-            self::$todo = Todos::get(self::$vars->id);
+            self::$todo = self::$vars->new ? null : Todos::get(self::$vars->id);
         }
 
         return self::status();
@@ -52,11 +55,26 @@ class ManageTodo
             return false;
         }
 
-        if (!self::$todo instanceof Todo) {
-            return true;
-        }
-
         try {
+            if (self::$vars->new) {
+                if (isset($_POST['save'])) {
+                    $todo = Todos::add(
+                        ManageVars::post('todo_title'),
+                        ManageVars::post('todo_list'),
+                        ManageVars::post('todo_note')
+                    );
+
+                    App::backend()->notices()->addSuccessNotice(sprintf(__('Todo added to the list "%s".'), Html::escapeHTML($todo->list)));
+                    My::redirect(self::$vars->params());
+                }
+
+                return true;
+            }
+
+            if (!self::$todo instanceof Todo) {
+                return true;
+            }
+
             if (isset($_POST['save'])) {
                 Todos::update(
                     self::$todo->id,
@@ -95,13 +113,13 @@ class ManageTodo
 
         echo
         App::backend()->page()->breadcrumb([
-            Html::escapeHTML(App::blog()->name()) => '',
-            My::name()                            => $back,
-            __('Edit a todo')                     => '',
+            Html::escapeHTML(App::blog()->name())                  => '',
+            My::name()                                             => $back,
+            self::$vars->new ? __('New todo') : __('Edit a todo') => '',
         ]) .
         App::backend()->notices()->getNotices();
 
-        if (self::$todo instanceof Todo) {
+        if (self::$vars->new || self::$todo instanceof Todo) {
             echo
             Manage::datalist(Todos::getLists())->render() .
             self::todoForm(self::$todo)->render();
@@ -126,60 +144,83 @@ class ManageTodo
         App::backend()->page()->closeModule();
     }
 
-    private static function todoForm(Todo $todo): Form
+    /**
+     * Get the form of a todo.
+     *
+     * @param   null|Todo   $todo   The edited todo, null for a new one
+     */
+    private static function todoForm(?Todo $todo): Form
     {
         // After an error, the form keeps what has been typed
         $posted  = isset($_POST['save']);
         $user_tz = is_string($user_tz = App::auth()->getInfo('user_tz')) ? $user_tz : 'UTC';
 
+        $fields = [
+            (new Para())
+                ->items([
+                    (new Input('todo_title'))
+                        ->class('maximal')
+                        ->maxlength(Todos::TITLE_LENGTH)
+                        ->required(true)
+                        ->value(Html::escapeHTML($posted ? ManageVars::post('todo_title') : ($todo->title ?? '')))
+                        ->label((new Label(__('To do:'), Label::OL_TF))),
+                ]),
+            (new Para())
+                ->items([
+                    // A new todo is proposed for the list currently shown
+                    Manage::listInput('todo_list', $posted ? ManageVars::post('todo_list') : ($todo->list ?? self::$vars->list))
+                        ->placeholder(Todos::DEFAULT_LIST)
+                        ->label((new Label(__('List:'), Label::OL_TF))),
+                ]),
+            (new Note())
+                ->class('form-note')
+                ->text(sprintf(
+                    __('A list is a single word. A new word creates a new list, without word the todo goes to the list "%s".'),
+                    Todos::DEFAULT_LIST
+                )),
+            (new Para())
+                ->items([
+                    (new Textarea('todo_note', Html::escapeHTML($posted ? ManageVars::post('todo_note') : ($todo->note ?? ''))))
+                        ->class('maximal')
+                        ->cols(60)
+                        ->rows(8)
+                        ->label((new Label(__('Details:'), Label::OL_TF))),
+                ]),
+        ];
+
+        $buttons = [
+            (new Submit('save', __('Save'))),
+        ];
+
+        if ($todo instanceof Todo) {
+            $fields[] = (new Para())
+                ->items([
+                    (new Checkbox('todo_done', $posted ? isset($_POST['todo_done']) : $todo->isDone()))
+                        ->value('1')
+                        ->label((new Label(__('Done'), Label::IL_FT))),
+                ]);
+            $fields[] = (new Note())
+                ->class('form-note')
+                ->text(sprintf(
+                    __('Added by %1$s on %2$s, last change on %3$s.'),
+                    Html::escapeHTML($todo->user),
+                    Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->created, $user_tz)),
+                    Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->updated, $user_tz))
+                ));
+            $buttons[] = (new Submit('delete', __('Delete')))
+                ->class('delete');
+        }
+
+        $fields[] = (new Para())
+            ->class('form-buttons')
+            ->items([
+                ... $buttons,
+                ... My::hiddenFields(),
+            ]);
+
         return (new Form('todo-form'))
             ->method('post')
-            ->action(My::manageUrl([... self::$vars->params(), 'id' => $todo->id]))
-            ->fields([
-                (new Para())
-                    ->items([
-                        (new Input('todo_title'))
-                            ->class('maximal')
-                            ->maxlength(Todos::TITLE_LENGTH)
-                            ->required(true)
-                            ->value(Html::escapeHTML($posted ? ManageVars::post('todo_title') : $todo->title))
-                            ->label((new Label(__('To do:'), Label::OL_TF))),
-                    ]),
-                (new Para())
-                    ->items([
-                        Manage::listInput('todo_list', $posted ? ManageVars::post('todo_list') : $todo->list)
-                            ->label((new Label(__('List:'), Label::OL_TF))),
-                    ]),
-                (new Para())
-                    ->items([
-                        (new Textarea('todo_note', Html::escapeHTML($posted ? ManageVars::post('todo_note') : $todo->note)))
-                            ->class('maximal')
-                            ->cols(60)
-                            ->rows(8)
-                            ->label((new Label(__('Details:'), Label::OL_TF))),
-                    ]),
-                (new Para())
-                    ->items([
-                        (new Checkbox('todo_done', $posted ? isset($_POST['todo_done']) : $todo->isDone()))
-                            ->value('1')
-                            ->label((new Label(__('Done'), Label::IL_FT))),
-                    ]),
-                (new Note())
-                    ->class('form-note')
-                    ->text(sprintf(
-                        __('Added by %1$s on %2$s, last change on %3$s.'),
-                        Html::escapeHTML($todo->user),
-                        Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->created, $user_tz)),
-                        Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->updated, $user_tz))
-                    )),
-                (new Para())
-                    ->class('form-buttons')
-                    ->items([
-                        (new Submit('save', __('Save'))),
-                        (new Submit('delete', __('Delete')))
-                            ->class('delete'),
-                        ... My::hiddenFields(),
-                    ]),
-            ]);
+            ->action(My::manageUrl([... self::$vars->params(), ... ($todo instanceof Todo ? ['id' => $todo->id] : ['new' => 1])]))
+            ->fields($fields);
     }
 }

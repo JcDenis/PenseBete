@@ -60,6 +60,11 @@ class ManageVars
      */
     public readonly int $id;
 
+    /**
+     * Show the form of a new todo.
+     */
+    public readonly bool $new;
+
     public function __construct()
     {
         $status = self::request('status');
@@ -70,6 +75,7 @@ class ManageVars
         $this->query  = mb_substr(self::request('q'), 0, 100);
         $this->page   = max(1, self::number('page'));
         $this->id     = max(0, self::number('id'));
+        $this->new    = $this->id === 0 && self::request('new') !== '';
     }
 
     /**

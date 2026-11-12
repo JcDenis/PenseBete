@@ -73,13 +73,14 @@ Il n'y a pas de table des listes : une liste existe tant qu'elle contient au moi
 
 ## Administration
 
-Une page du plugin dans le menu Blog, comme ClaudetteMcp :
+Une page du plugin dans le menu Blog, construite comme les listes du cœur (billets, pages) :
 
-* un ajout rapide en tête de page : la tâche et sa liste, avec les listes existantes en suggestion ;
-* les tâches, filtrées par liste et par statut (« à faire » par défaut), avec pagination ;
+* la page du plugin est la liste des tâches, filtrées par liste et par statut (« à faire » par défaut), avec pagination ;
+* un bouton « Nouvelle tâche » en haut de page mène au formulaire d'une tâche, sur sa propre page :
+  texte, liste (avec les listes existantes en suggestion) et détails ;
+* le même formulaire sert à modifier une tâche, avec en plus son statut et sa suppression ;
 * des actions groupées : marquer « fait », remettre « à faire », déplacer dans une autre liste, supprimer ;
 * un bouton par tâche pour la marquer « faite » ou la rouvrir ;
-* la modification d'une tâche : texte, détails, liste, statut ;
 * le renommage d'une liste.
 
 La recherche de texte ne tient compte ni de la casse ni des accents. Elle est faite par le plugin et non par la base
