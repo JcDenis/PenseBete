@@ -1,3 +1,4 @@
-admin:index.php?process=Plugin&p=PenseBete&status=all&q=test
+admin:index.php?process=Plugin&p=PenseBete&status=all&q=test&sortby=todo_title&order=asc&nb=10
 admin:index.php?process=Plugin&p=PenseBete&new=1
+admin:index.php?process=Plugin&p=PenseBete&rename=1
 admin:index.php?process=Plugin&p=PenseBete&id=1

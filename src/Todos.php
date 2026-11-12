@@ -62,6 +62,13 @@ class Todos
     public const TITLE_LENGTH = 255;
 
     /**
+     * The fields a list of todos can be sorted by.
+     *
+     * @var     array<int, string>  SORTS
+     */
+    public const SORTS = ['todo_upddt', 'todo_creadt', 'todo_title', 'todo_list'];
+
+    /**
      * Get full table name.
      */
     public static function table(): string
@@ -190,21 +197,23 @@ class Todos
     /**
      * Search todos of current blog.
      *
-     * Todos to do come first, then the last changed ones.
+     * Without sort field, todos to do come first, then the last changed ones.
      *
      * @param   string      $list       The list name, empty for all lists
      * @param   null|int    $status     The status, null for all
      * @param   string      $query      Some text to find in title or details, whatever the case and the accents
      * @param   int         $limit      The maximum number of todos, 0 for all
      * @param   int         $offset     The number of todos to skip
+     * @param   string      $sortby     The sort field, one of SORTS
+     * @param   bool        $desc       The sort order is descending
      *
      * @return  array<int, Todo>
      */
-    public static function search(string $list = '', ?int $status = null, string $query = '', int $limit = 0, int $offset = 0): array
+    public static function search(string $list = '', ?int $status = null, string $query = '', int $limit = 0, int $offset = 0, string $sortby = '', bool $desc = true): array
     {
         if (trim($query) !== '') {
             // The text is not searched by the database: case, accents and escaping of LIKE differ from one database to another
-            $todos = self::match(self::search($list, $status), $query);
+            $todos = self::match(self::search($list, $status, '', 0, 0, $sortby, $desc), $query);
 
             return $limit > 0 ? array_slice($todos, max(0, $offset), $limit) : $todos;
         }
@@ -221,8 +230,16 @@ class Todos
                 'todo_creadt',
                 'todo_upddt',
             ])
-            ->from(self::table())
-            ->order(['todo_status ASC', 'todo_upddt DESC', 'todo_id DESC']);
+            ->from(self::table());
+
+        if (in_array($sortby, self::SORTS, true)) {
+            $order = $desc ? ' DESC' : ' ASC';
+            // Texts are sorted whatever their case and accents
+            $field = in_array($sortby, ['todo_title', 'todo_list'], true) ? App::db()->con()->lexFields($sortby) : $sortby;
+            $sql->order([$field . $order, 'todo_id' . $order]);
+        } else {
+            $sql->order(['todo_status ASC', 'todo_upddt DESC', 'todo_id DESC']);
+        }
 
         self::filter($sql, $list, $status);
 

@@ -75,13 +75,16 @@ Il n'y a pas de table des listes : une liste existe tant qu'elle contient au moi
 
 Une page du plugin dans le menu Blog, construite comme les listes du cœur (billets, pages) :
 
-* la page du plugin est la liste des tâches, filtrées par liste et par statut (« à faire » par défaut), avec pagination ;
+* la page du plugin est la liste des tâches à faire, avec pagination ;
+* le bloc dépliable « Filtres et options d'affichage » du cœur (`Filters`) la limite à une liste, à un statut
+  ou à un texte recherché, et règle le tri et le nombre de tâches par page ; ces options sont déclarées
+  par le behavior `adminFiltersListsV3`, elles se règlent donc aussi dans les préférences de l'utilisateur ;
 * un bouton « Nouvelle tâche » en haut de page mène au formulaire d'une tâche, sur sa propre page :
   texte, liste (avec les listes existantes en suggestion) et détails ;
 * le même formulaire sert à modifier une tâche, avec en plus son statut et sa suppression ;
+* un second bouton, « Renommer une liste », mène au formulaire de renommage, lui aussi sur sa propre page ;
 * des actions groupées : marquer « fait », remettre « à faire », déplacer dans une autre liste, supprimer ;
-* un bouton par tâche pour la marquer « faite » ou la rouvrir ;
-* le renommage d'une liste.
+* un bouton par tâche pour la marquer « faite » ou la rouvrir.
 
 La recherche de texte ne tient compte ni de la casse ni des accents. Elle est faite par le plugin et non par la base
 de données, pour donner le même résultat avec MySQL, PostgreSQL et SQLite.

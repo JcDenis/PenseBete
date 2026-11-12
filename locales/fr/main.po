@@ -45,9 +45,6 @@ msgstr "Tous les états"
 msgid "All the todos of the list follow. With the name of another list, both lists are merged."
 msgstr "Toutes les tâches de la liste suivent. Avec le nom d'une autre liste, les deux listes sont fusionnées."
 
-msgid "Apply"
-msgstr "Appliquer"
-
 msgid "Are you sure you want to delete selected todos?"
 msgstr "Êtes-vous sûr de vouloir supprimer les tâches sélectionnées ?"
 
@@ -71,6 +68,12 @@ msgstr "Modifier cette tâche"
 
 msgid "List \"%1$s\" renamed to \"%2$s\"."
 msgstr "Liste « %1$s » renommée en « %2$s »."
+
+msgid "List of %s todos matching the filter."
+msgstr "Liste des %s tâches correspondant au filtre."
+
+msgid "List of todos to do (%s)"
+msgstr "Liste des tâches à faire (%s)"
 
 msgid "List:"
 msgstr "Liste :"
@@ -135,6 +138,9 @@ msgstr "Afficher cette liste"
 msgid "There is nothing to do."
 msgstr "Il n'y a rien à faire."
 
+msgid "There is no list yet."
+msgstr "Il n'y a pas encore de liste."
+
 msgid "This list does not exist."
 msgstr "Cette liste n'existe pas."
 
@@ -165,9 +171,6 @@ msgstr "Tâche supprimée."
 msgid "Todo successfully updated."
 msgstr "Tâche mise à jour."
 
-msgid "Todos (%s)"
-msgstr "Tâches (%s)"
-
 msgid "Unknown action."
 msgstr "Action inconnue."
 
@@ -185,3 +188,6 @@ msgstr "Vous devez indiquer le nouveau nom de la liste."
 
 msgid "You must say what there is to do."
 msgstr "Vous devez indiquer ce qu'il y a à faire."
+
+msgid "todos per page"
+msgstr "tâches par page"

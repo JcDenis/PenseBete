@@ -42,7 +42,7 @@ class ManageTodo
     public static function init(): bool
     {
         if (self::status(My::checkContext(My::MANAGE))) {
-            self::$vars = new ManageVars();
+            self::$vars = Manage::vars();
             self::$todo = self::$vars->new ? null : Todos::get(self::$vars->id);
         }
 

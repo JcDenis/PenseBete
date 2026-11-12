@@ -10,7 +10,6 @@ use Dotclear\Helper\Date;
 use Dotclear\Helper\Html\Form\Caption;
 use Dotclear\Helper\Html\Form\Checkbox;
 use Dotclear\Helper\Html\Form\Datalist;
-use Dotclear\Helper\Html\Form\Details;
 use Dotclear\Helper\Html\Form\Div;
 use Dotclear\Helper\Html\Form\Form;
 use Dotclear\Helper\Html\Form\Img;
@@ -22,7 +21,6 @@ use Dotclear\Helper\Html\Form\Option;
 use Dotclear\Helper\Html\Form\Para;
 use Dotclear\Helper\Html\Form\Select;
 use Dotclear\Helper\Html\Form\Submit;
-use Dotclear\Helper\Html\Form\Summary;
 use Dotclear\Helper\Html\Form\Table;
 use Dotclear\Helper\Html\Form\Tbody;
 use Dotclear\Helper\Html\Form\Td;
@@ -38,6 +36,9 @@ use Exception;
  * @ingroup     PenseBete
  *
  * Todos of current blog, for all users having the permission of the plugin.
+ *
+ * This page is the list of todos. The form of a todo and the form to rename a list
+ * are other pages, opened by the buttons on top of the list.
  *
  * @author      Jean-Christian Paul Denis
  * @copyright   AGPL-3.0
@@ -60,18 +61,37 @@ class Manage
      */
     private const QUICK_FORM = 'todos-quick-form';
 
+    /**
+     * The page of the form of a todo, called by this one.
+     *
+     * @var     string  PART_TODO
+     */
+    private const PART_TODO = 'todo';
+
+    /**
+     * The page of the form to rename a list, called by this one.
+     *
+     * @var     string  PART_RENAME
+     */
+    private const PART_RENAME = 'rename';
+
     private static ManageVars $vars;
 
     /**
-     * Show the form of a todo rather than the list.
+     * The page to show, empty for the list.
      */
-    private static bool $edit = false;
+    private static string $part = '';
 
     public static function init(): bool
     {
         if (self::status(My::checkContext(My::MANAGE))) {
             self::$vars = new ManageVars();
-            self::$edit = (self::$vars->id > 0 || self::$vars->new) && ManageTodo::init();
+
+            if ((self::$vars->id > 0 || self::$vars->new) && ManageTodo::init()) {
+                self::$part = self::PART_TODO;
+            } elseif (self::$vars->rename && ManageRename::init()) {
+                self::$part = self::PART_RENAME;
+            }
         }
 
         return self::status();
@@ -83,8 +103,12 @@ class Manage
             return false;
         }
 
-        if (self::$edit) {
+        if (self::$part === self::PART_TODO) {
             return ManageTodo::process();
+        }
+
+        if (self::$part === self::PART_RENAME) {
+            return ManageRename::process();
         }
 
         $vars = self::$vars;
@@ -149,27 +173,6 @@ class Manage
                 App::backend()->notices()->addSuccessNotice($message);
                 My::redirect($vars->params());
             }
-
-            // Rename a list
-            if (isset($_POST['rename'])) {
-                if (ManageVars::post('list_to') === '') {
-                    throw new Exception(__('You must give the new name of the list.'));
-                }
-
-                $from = Todos::cleanList(ManageVars::post('list_from'));
-                $to   = Todos::cleanList(ManageVars::post('list_to'));
-
-                Todos::renameList($from, $to);
-
-                // Follow the renamed list
-                $params = $vars->params();
-                if ($vars->list === $from) {
-                    $params['list'] = $to;
-                }
-
-                App::backend()->notices()->addSuccessNotice(sprintf(__('List "%1$s" renamed to "%2$s".'), Html::escapeHTML($from), Html::escapeHTML($to)));
-                My::redirect($params);
-            }
         } catch (Exception $exception) {
             App::error()->add($exception->getMessage());
         }
@@ -183,8 +186,14 @@ class Manage
             return;
         }
 
-        if (self::$edit) {
+        if (self::$part === self::PART_TODO) {
             ManageTodo::render();
+
+            return;
+        }
+
+        if (self::$part === self::PART_RENAME) {
+            ManageRename::render();
 
             return;
         }
@@ -192,10 +201,23 @@ class Manage
         $vars  = self::$vars;
         $lists = Todos::getLists();
         $total = Todos::count($vars->list, $vars->todoStatus(), $vars->query);
-        $page  = min($vars->page, max(1, (int) ceil($total / ManageVars::PER_PAGE)));
-        $todos = Todos::search($vars->list, $vars->todoStatus(), $vars->query, ManageVars::PER_PAGE, ($page - 1) * ManageVars::PER_PAGE);
+        $page  = min($vars->page, max(1, (int) ceil($total / $vars->nb)));
+        $todos = Todos::search($vars->list, $vars->todoStatus(), $vars->query, $vars->nb, ($page - 1) * $vars->nb, $vars->sortby, $vars->desc);
 
-        App::backend()->page()->openModule(My::name(), self::head());
+        App::backend()->page()->openModule(My::name(), self::head() . $vars->filters->js(My::manageUrl([], '&')));
+
+        // The buttons to the other pages: the main one stays on the right
+        $buttons = [];
+        if ($lists !== []) {
+            $buttons[] = (new Link())
+                ->class('button')
+                ->href(My::manageUrl([... $vars->params(), 'rename' => 1]))
+                ->text(__('Rename a list'));
+        }
+        $buttons[] = (new Link())
+            ->class(['button', 'add'])
+            ->href(My::manageUrl([... $vars->params(), 'new' => 1]))
+            ->text(__('New todo'));
 
         echo
         App::backend()->page()->breadcrumb([
@@ -204,39 +226,41 @@ class Manage
         ]) .
         App::backend()->notices()->getNotices() .
         (new Para())
-            ->class('new-stuff')
-            ->items([
-                (new Link())
-                    ->class(['button', 'add'])
-                    ->href(My::manageUrl([... $vars->params(), 'new' => 1]))
-                    ->text(__('New todo')),
-            ])
-            ->render() .
-        self::datalist($lists)->render() .
-        self::filterForm($lists)->render();
+            // "form-buttons" is the class provided by Dotclear to put several buttons in this block
+            ->class(['new-stuff', 'form-buttons'])
+            ->items($buttons)
+            ->render();
+
+        // Filters and display options, folded like in other lists of Dotclear
+        $vars->filters->display('admin.plugin.' . My::id());
 
         if ($todos === []) {
             echo (new Note())
                 ->class('info')
-                ->text($total === 0 && $vars->params() === [] ? __('There is nothing to do.') : __('No todo matches the filter.'))
+                ->text($vars->filters->show() ? __('No todo matches the filter.') : __('There is nothing to do.'))
                 ->render();
         } else {
-            $pager = new Pager($page, $total, ManageVars::PER_PAGE, 10);
+            $pager = new Pager($page, $total, $vars->nb, 10);
 
             echo
             $pager->getLinks() .
+            self::datalist($lists)->render() .
             self::todosForm($todos, $total)->render() .
             self::quickForm()->render() .
             $pager->getLinks();
         }
 
-        if ($lists !== []) {
-            echo self::renameForm($lists)->render();
-        }
-
         App::backend()->page()->helpBlock(My::id());
 
         App::backend()->page()->closeModule();
+    }
+
+    /**
+     * Get the request values of the page.
+     */
+    public static function vars(): ManageVars
+    {
+        return self::$vars;
     }
 
     /**
@@ -272,54 +296,6 @@ class Manage
             ->maxlength(Todos::LIST_LENGTH)
             ->list(self::DATALIST)
             ->value(Html::escapeHTML($value));
-    }
-
-    /**
-     * @param   array<int, array{name: string, todo: int, done: int}>   $lists  The lists
-     */
-    private static function filterForm(array $lists): Form
-    {
-        $vars = self::$vars;
-
-        $lists_options = [new Option(__('All lists'), '')];
-        $known         = false;
-        foreach ($lists as $list) {
-            $lists_options[] = new Option(Html::escapeHTML(sprintf('%s (%s)', $list['name'], $list['todo'])), Html::escapeHTML($list['name']));
-            $known           = $known || $list['name'] === $vars->list;
-        }
-        if (!$known && $vars->list !== '') {
-            // A list which has no todo anymore
-            $lists_options[] = new Option(Html::escapeHTML(sprintf('%s (%s)', $vars->list, 0)), Html::escapeHTML($vars->list));
-        }
-
-        return (new Form('todos-filter-form'))
-            ->method('get')
-            ->action(App::backend()->url()->getBase('admin.plugin.' . My::id()))
-            ->fields([
-                (new Para())
-                    ->class('form-buttons')
-                    ->items([
-                        (new Select('list'))
-                            ->items($lists_options)
-                            ->default(Html::escapeHTML($vars->list))
-                            ->label((new Label(__('List:'), Label::IL_TF))),
-                        (new Select('status'))
-                            ->items([
-                                new Option(__('To do'), ManageVars::STATUS_TODO),
-                                new Option(__('Done'), ManageVars::STATUS_DONE),
-                                new Option(__('All statuses'), ManageVars::STATUS_ALL),
-                            ])
-                            ->default($vars->status)
-                            ->label((new Label(__('Status:'), Label::IL_TF))),
-                        (new Input('q'))
-                            ->size(20)
-                            ->maxlength(100)
-                            ->value(Html::escapeHTML($vars->query))
-                            ->label((new Label(__('Search:'), Label::IL_TF))),
-                        (new Submit('todos-filter-submit', __('Apply'))),
-                        ... App::backend()->url()->hiddenFormFields('admin.plugin.' . My::id()),
-                    ]),
-            ]);
     }
 
     /**
@@ -362,7 +338,7 @@ class Manage
                         ->class('nowrap')
                         ->items([
                             (new Link())
-                                ->href(My::manageUrl(['list' => $todo->list, ... ($vars->status === ManageVars::STATUS_TODO ? [] : ['status' => $vars->status])]))
+                                ->href(My::manageUrl(['list' => $todo->list, ... ($vars->status === '' ? [] : ['status' => $vars->status])]))
                                 ->title(__('Show this list'))
                                 ->text(Html::escapeHTML($todo->list)),
                         ]),
@@ -396,6 +372,12 @@ class Manage
                 ]);
         }
 
+        if ($vars->filters->show()) {
+            $caption = sprintf(__('List of %s todos matching the filter.'), $total);
+        } else {
+            $caption = sprintf(__('List of todos to do (%s)'), $total);
+        }
+
         return (new Form('todos-form'))
             ->method('post')
             ->action(My::manageUrl($vars->params()))
@@ -405,7 +387,7 @@ class Manage
                     ->items([
                         (new Table('todos'))
                             ->class('rch')
-                            ->caption(new Caption(sprintf(__('Todos (%s)'), $total)))
+                            ->caption(new Caption($caption))
                             ->thead((new Thead())
                                 ->rows([
                                     (new Tr())
@@ -453,43 +435,5 @@ class Manage
             ->method('post')
             ->action(My::manageUrl(self::$vars->params()))
             ->fields(My::hiddenFields());
-    }
-
-    /**
-     * @param   array<int, array{name: string, todo: int, done: int}>   $lists  The lists
-     */
-    private static function renameForm(array $lists): Details
-    {
-        return (new Details('list-rename'))
-            ->summary(new Summary(__('Rename a list')))
-            ->items([
-                (new Form('list-rename-form'))
-                    ->method('post')
-                    ->action(My::manageUrl(self::$vars->params()))
-                    ->fields([
-                        (new Para())
-                            ->items([
-                                (new Select('list_from'))
-                                    ->items(array_map(fn (array $list): Option => new Option(Html::escapeHTML($list['name']), Html::escapeHTML($list['name'])), $lists))
-                                    ->default(Html::escapeHTML(self::$vars->list))
-                                    ->label((new Label(__('List:'), Label::OL_TF))),
-                            ]),
-                        (new Para())
-                            ->items([
-                                self::listInput('list_to')
-                                    ->required(true)
-                                    ->label((new Label(__('New name:'), Label::OL_TF))),
-                            ]),
-                        (new Note())
-                            ->class('form-note')
-                            ->text(__('All the todos of the list follow. With the name of another list, both lists are merged.')),
-                        (new Para())
-                            ->class('form-buttons')
-                            ->items([
-                                (new Submit('rename', __('Rename'))),
-                                ... My::hiddenFields(),
-                            ]),
-                    ]),
-            ]);
     }
 }
