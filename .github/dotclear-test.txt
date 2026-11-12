@@ -1,0 +1,2 @@
+admin:index.php?process=Plugin&p=PenseBete&status=all&q=test
+admin:index.php?process=Plugin&p=PenseBete&id=1

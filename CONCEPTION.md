@@ -1,7 +1,7 @@
 # PenseBete — Conception
 
 Document de conception du plugin Dotclear **PenseBete**.
-État au 12 novembre 2026 : rien n'est codé.
+État au 12 novembre 2026 : étape 1 codée (le plugin seul), la liaison avec ClaudetteMcp reste à faire.
 
 ## Objectif
 
@@ -66,6 +66,8 @@ Il n'y a pas de table des listes : une liste existe tant qu'elle contient au moi
   Les administrateurs du blog et les super administrateurs l'ont de fait.
 * Elle donne tout sur les tâches du blog, quel qu'en soit l'auteur : voir, ajouter, modifier, cocher, supprimer.
   Pas de niveau « lecture seule » dans l'admin en v1.
+* Elle ne donne pas accès à l'admin : comme pour toute page de l'admin, l'utilisateur doit aussi pouvoir s'y connecter
+  (permission « gérer ses propres billets » au moins).
 * Par le MCP, l'utilisateur de la clé doit avoir en plus la permission d'ApiServer (« API client »),
   comme pour tous les outils de ClaudetteMcp.
 
@@ -76,8 +78,12 @@ Une page du plugin dans le menu Blog, comme ClaudetteMcp :
 * un ajout rapide en tête de page : la tâche et sa liste, avec les listes existantes en suggestion ;
 * les tâches, filtrées par liste et par statut (« à faire » par défaut), avec pagination ;
 * des actions groupées : marquer « fait », remettre « à faire », déplacer dans une autre liste, supprimer ;
+* un bouton par tâche pour la marquer « faite » ou la rouvrir ;
 * la modification d'une tâche : texte, détails, liste, statut ;
 * le renommage d'une liste.
+
+La recherche de texte ne tient compte ni de la casse ni des accents. Elle est faite par le plugin et non par la base
+de données, pour donner le même résultat avec MySQL, PostgreSQL et SQLite.
 
 Supprimer une tâche ne se fait que dans l'admin, et c'est définitif.
 

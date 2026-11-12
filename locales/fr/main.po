@@ -1,0 +1,187 @@
+# Language: Français
+# Module: PenseBete - 0.1
+# Date: 2026-11-12 22:00:00
+# Author: Jean-Christian Denis
+
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: PenseBete 0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-11-12T22:00:00+00:00\n"
+"Last-Translator: Jean-Christian Denis\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Todo lists"
+msgstr "Pense-bête"
+
+msgid "Keep lists of things to do in the blog administration"
+msgstr "Tenir des listes de choses à faire dans l'administration du blog"
+
+msgid "manage todo lists"
+msgstr "gérer les listes de tâches"
+
+msgid "A list is a single word. A new word creates a new list, without word the todo goes to the list \"%s\"."
+msgstr "Une liste est un simple mot. Un nouveau mot crée une nouvelle liste, sans mot la tâche va dans la liste « %s »."
+
+msgid "A list name is a single word of %s characters at most, made of letters, digits, \"-\" and \"_\"."
+msgstr "Un nom de liste est un seul mot de %s caractères au plus, fait de lettres, de chiffres, de « - » et de « _ »."
+
+msgid "Add a todo"
+msgstr "Ajouter une tâche"
+
+msgid "Added by"
+msgstr "Ajoutée par"
+
+msgid "Added by %1$s on %2$s, last change on %3$s."
+msgstr "Ajoutée par %1$s le %2$s, dernière modification le %3$s."
+
+msgid "All lists"
+msgstr "Toutes les listes"
+
+msgid "All statuses"
+msgstr "Tous les états"
+
+msgid "All the todos of the list follow. With the name of another list, both lists are merged."
+msgstr "Toutes les tâches de la liste suivent. Avec le nom d'une autre liste, les deux listes sont fusionnées."
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Are you sure you want to delete selected todos?"
+msgstr "Êtes-vous sûr de vouloir supprimer les tâches sélectionnées ?"
+
+msgid "Are you sure you want to delete this todo?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette tâche ?"
+
+msgid "Back to the todos"
+msgstr "Retour aux tâches"
+
+msgid "Details:"
+msgstr "Détails :"
+
+msgid "Done"
+msgstr "Fait"
+
+msgid "Edit a todo"
+msgstr "Modifier une tâche"
+
+msgid "Edit this todo"
+msgstr "Modifier cette tâche"
+
+msgid "List \"%1$s\" renamed to \"%2$s\"."
+msgstr "Liste « %1$s » renommée en « %2$s »."
+
+msgid "List:"
+msgstr "Liste :"
+
+msgid "Mark as done"
+msgstr "Marquer comme faites"
+
+msgid "Mark as to do"
+msgstr "Remettre à faire"
+
+msgid "Mark this todo as done"
+msgstr "Marquer cette tâche comme faite"
+
+msgid "Mark this todo as to do"
+msgstr "Remettre cette tâche à faire"
+
+msgid "Move to the list"
+msgstr "Déplacer dans la liste"
+
+msgid "New name:"
+msgstr "Nouveau nom :"
+
+msgid "No todo matches the filter."
+msgstr "Aucune tâche ne correspond au filtre."
+
+msgid "No todo selected."
+msgstr "Aucune tâche sélectionnée."
+
+msgid "Rename"
+msgstr "Renommer"
+
+msgid "Rename a list"
+msgstr "Renommer une liste"
+
+msgid "Reopen"
+msgstr "Rouvrir"
+
+msgid "Select this todo"
+msgstr "Sélectionner cette tâche"
+
+msgid "Selected todos action:"
+msgstr "Action sur les tâches sélectionnées :"
+
+msgid "Selected todos deleted."
+msgstr "Tâches sélectionnées supprimées."
+
+msgid "Selected todos marked as done."
+msgstr "Tâches sélectionnées marquées comme faites."
+
+msgid "Selected todos marked as to do."
+msgstr "Tâches sélectionnées remises à faire."
+
+msgid "Selected todos moved."
+msgstr "Tâches sélectionnées déplacées."
+
+msgid "Show this list"
+msgstr "Afficher cette liste"
+
+msgid "There is nothing to do."
+msgstr "Il n'y a rien à faire."
+
+msgid "This list does not exist."
+msgstr "Cette liste n'existe pas."
+
+msgid "This todo does not exist."
+msgstr "Cette tâche n'existe pas."
+
+msgid "To do"
+msgstr "À faire"
+
+msgid "To do:"
+msgstr "À faire :"
+
+msgid "Todo"
+msgstr "Tâche"
+
+msgid "Todo added to the list \"%s\"."
+msgstr "Tâche ajoutée à la liste « %s »."
+
+msgid "Todo marked as done."
+msgstr "Tâche marquée comme faite."
+
+msgid "Todo marked as to do."
+msgstr "Tâche remise à faire."
+
+msgid "Todo successfully deleted."
+msgstr "Tâche supprimée."
+
+msgid "Todo successfully updated."
+msgstr "Tâche mise à jour."
+
+msgid "Todos (%s)"
+msgstr "Tâches (%s)"
+
+msgid "Unknown action."
+msgstr "Action inconnue."
+
+msgid "Unknown status."
+msgstr "État inconnu."
+
+msgid "Updated"
+msgstr "Modifiée le"
+
+msgid "You must give the name of the list."
+msgstr "Vous devez indiquer le nom de la liste."
+
+msgid "You must give the new name of the list."
+msgstr "Vous devez indiquer le nouveau nom de la liste."
+
+msgid "You must say what there is to do."
+msgstr "Vous devez indiquer ce qu'il y a à faire."
