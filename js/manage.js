@@ -14,6 +14,9 @@ dotclear.ready(() => {
     }
     dotclear.condSubmit('#todos-form td input[type="checkbox"]', '#todos-form #do-action');
 
+    // Headers in cells on small screens
+    dotclear.responsiveCellHeaders(form.querySelector('#todos'), '#todos', 1, true);
+
     // The list name is only needed to move todos
     const action = form.querySelector('#action');
     const move = form.querySelector('label.move-list');

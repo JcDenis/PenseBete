@@ -386,7 +386,6 @@ class Manage
                     ->class('table-outer')
                     ->items([
                         (new Table('todos'))
-                            ->class('rch')
                             ->caption(new Caption($caption))
                             ->thead((new Thead())
                                 ->rows([
