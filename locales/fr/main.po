@@ -30,11 +30,8 @@ msgstr "Une liste est un simple mot. Un nouveau mot crée une nouvelle liste, sa
 msgid "A list name is a single word of %s characters at most, made of letters, digits, \"-\" and \"_\"."
 msgstr "Un nom de liste est un seul mot de %s caractères au plus, fait de lettres, de chiffres, de « - » et de « _ »."
 
-msgid "Added by"
-msgstr "Ajoutée par"
-
-msgid "Added by %1$s on %2$s, last change on %3$s."
-msgstr "Ajoutée par %1$s le %2$s, dernière modification le %3$s."
+msgid "Author: %1$s. Added on %2$s, last change on %3$s."
+msgstr "Auteur·rice : %1$s. Tâche ajoutée le %2$s, dernière modification le %3$s."
 
 msgid "All lists"
 msgstr "Toutes les listes"

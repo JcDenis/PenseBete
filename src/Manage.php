@@ -394,7 +394,7 @@ class Manage
                                             (new Th())->text(__('Todo'))->scope('col')->colspan(2)->class('first'),
                                             (new Th())->text(__('List'))->scope('col'),
                                             (new Th())->text(__('Updated'))->scope('col'),
-                                            (new Th())->text(__('Added by'))->scope('col'),
+                                            (new Th())->text(__('Author'))->scope('col'),
                                             (new Th())->text(__('Status'))->scope('col'),
                                         ]),
                                 ]))

@@ -202,7 +202,7 @@ class ManageTodo
             $fields[] = (new Note())
                 ->class('form-note')
                 ->text(sprintf(
-                    __('Added by %1$s on %2$s, last change on %3$s.'),
+                    __('Author: %1$s. Added on %2$s, last change on %3$s.'),
                     Html::escapeHTML($todo->user),
                     Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->created, $user_tz)),
                     Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->updated, $user_tz))
