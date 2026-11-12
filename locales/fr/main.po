@@ -54,6 +54,9 @@ msgstr "Retour aux tâches"
 msgid "Details:"
 msgstr "Détails :"
 
+msgid "Display the last todos to do on dashboard"
+msgstr "Afficher les dernières tâches à faire sur le tableau de bord"
+
 msgid "Done"
 msgstr "Fait"
 
@@ -101,6 +104,9 @@ msgstr "Aucune tâche ne correspond au filtre."
 
 msgid "No todo selected."
 msgstr "Aucune tâche sélectionnée."
+
+msgid "Number of todos to display:"
+msgstr "Nombre de tâches à afficher :"
 
 msgid "One todo to do"
 msgid_plural "%d todos to do"

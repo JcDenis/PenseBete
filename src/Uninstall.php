@@ -36,6 +36,11 @@ class Uninstall
                 Todos::TABLE_NAME
             )
             ->addUserAction(
+                'preferences',
+                'delete_all',
+                My::id()
+            )
+            ->addUserAction(
                 'plugins',
                 'delete',
                 My::id()
@@ -49,6 +54,11 @@ class Uninstall
                 'tables',
                 'delete',
                 Todos::TABLE_NAME
+            )
+            ->addDirectAction(
+                'preferences',
+                'delete_all',
+                My::id()
             )
             ->addDirectAction(
                 'plugins',

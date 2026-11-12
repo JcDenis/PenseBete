@@ -1,7 +1,7 @@
 # PenseBete — Conception
 
 Document de conception du plugin Dotclear **PenseBete**.
-État au 12 novembre 2026 : étapes 1 et 2 codées (le plugin et sa liaison avec ClaudetteMcp), aucune release.
+État au 13 novembre 2026 : étapes 1 et 2 codées (le plugin et sa liaison avec ClaudetteMcp), tableau de bord ajouté, aucune release.
 
 ## Objectif
 
@@ -91,6 +91,18 @@ de données, pour donner le même résultat avec MySQL, PostgreSQL et SQLite.
 
 Supprimer une tâche ne se fait que dans l'admin, et c'est définitif.
 
+### Tableau de bord
+
+Comme le plugin maintenance du cœur, et réglé par chaque utilisateur dans ses préférences :
+
+* un favori (`adminDashboardFavoritesV2`) pour le menu et le tableau de bord ; sur le tableau de bord son titre
+  devient le nombre de tâches à faire du blog, s'il y en a ;
+* un module (`adminDashboardContentsV2`) qui liste les dernières tâches à faire ajoutées, avec un lien vers chacune
+  et vers la page du plugin ; il n'est pas affiché s'il n'y a rien à faire ;
+* deux options du tableau de bord (`adminDashboardOptionsFormV2`), enregistrées dans les préférences de
+  l'utilisateur (espace `PenseBete`) : `dashboard_item` affiche le module, il ne l'est pas par défaut, et
+  `dashboard_nb` est le nombre de tâches listées, 5 par défaut et 50 au plus.
+
 ## Liaison avec ClaudetteMcp
 
 Règle de ClaudetteMcp : un plugin porte lui-même sa liaison, dans son propre code (exemple : periodical).
@@ -138,8 +150,9 @@ Règles :
    Tests par le workflow de gh2da, puis sur le blog de dev.
 2. **La liaison ClaudetteMcp** : les trois outils. Test sur le blog de dev (connecteur à reconnecter
    pour valider les nouveaux outils), puis sur le blog personnel avec une nouvelle clé.
-3. **Plus tard**, si le besoin se confirme : favori du tableau de bord avec le nombre de tâches à faire,
-   export et import (plugin importExport), corbeille, échéance ou priorité.
+3. **Le tableau de bord** : favori avec le nombre de tâches à faire, module des dernières tâches ajoutées.
+4. **Plus tard**, si le besoin se confirme : export et import (plugin importExport), corbeille,
+   échéance ou priorité.
 
 ## Références
 

@@ -21,6 +21,7 @@ L10n::$locales['Are you sure you want to delete selected todos?'] = 'Êtes-vous 
 L10n::$locales['Are you sure you want to delete this todo?'] = 'Êtes-vous sûr de vouloir supprimer cette tâche ?';
 L10n::$locales['Back to the todos'] = 'Retour aux tâches';
 L10n::$locales['Details:'] = 'Détails :';
+L10n::$locales['Display the last todos to do on dashboard'] = 'Afficher les dernières tâches à faire sur le tableau de bord';
 L10n::$locales['Done'] = 'Fait';
 L10n::$locales['Edit a todo'] = 'Modifier une tâche';
 L10n::$locales['Edit this todo'] = 'Modifier cette tâche';
@@ -37,6 +38,7 @@ L10n::$locales['New name:'] = 'Nouveau nom :';
 L10n::$locales['New todo'] = 'Nouvelle tâche';
 L10n::$locales['No todo matches the filter.'] = 'Aucune tâche ne correspond au filtre.';
 L10n::$locales['No todo selected.'] = 'Aucune tâche sélectionnée.';
+L10n::$locales['Number of todos to display:'] = 'Nombre de tâches à afficher :';
 L10n::$locales['One todo to do'] = [
 	'Une tâche à faire',
 	'%d tâches à faire',

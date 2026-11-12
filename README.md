@@ -39,6 +39,11 @@ A list is created by adding a first todo to it and disappears with its last todo
 Selected todos can be marked as done or to do, moved to another list, or deleted.
 Renaming a list moves all its todos; with the name of another list, both lists are merged.
 
+On the dashboard, from the user preferences:
+
+* the favorite _Todo lists_ is an icon giving the number of todos to do,
+* an option of the dashboard displays the last todos to do added, and another one sets how many.
+
 ## AI ASSISTANT
 
 If the plugin [ClaudetteMcp](https://github.com/JcDenis/ClaudetteMcp) is enabled on the blog, _PenseBete_ adds these tools to its connector:

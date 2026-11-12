@@ -33,8 +33,11 @@ class Backend
         My::addBackendMenuItem(Menus::MENU_BLOG);
 
         App::behavior()->addBehaviors([
-            'adminFiltersListsV3'       => BackendBehaviors::adminFiltersListsV3(...),
-            'adminDashboardFavoritesV2' => BackendBehaviors::adminDashboardFavoritesV2(...),
+            'adminFiltersListsV3'              => BackendBehaviors::adminFiltersListsV3(...),
+            'adminDashboardFavoritesV2'        => BackendBehaviors::adminDashboardFavoritesV2(...),
+            'adminDashboardContentsV2'         => BackendBehaviors::adminDashboardContentsV2(...),
+            'adminDashboardOptionsFormV2'      => BackendBehaviors::adminDashboardOptionsFormV2(...),
+            'adminAfterDashboardOptionsUpdate' => BackendBehaviors::adminAfterDashboardOptionsUpdate(...),
         ]);
 
         return true;
