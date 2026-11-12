@@ -102,6 +102,11 @@ msgstr "Aucune tâche ne correspond au filtre."
 msgid "No todo selected."
 msgstr "Aucune tâche sélectionnée."
 
+msgid "One todo to do"
+msgid_plural "%d todos to do"
+msgstr[0] "Une tâche à faire"
+msgstr[1] "%d tâches à faire"
+
 msgid "Rename"
 msgstr "Renommer"
 

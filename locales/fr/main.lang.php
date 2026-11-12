@@ -37,6 +37,10 @@ L10n::$locales['New name:'] = 'Nouveau nom :';
 L10n::$locales['New todo'] = 'Nouvelle tâche';
 L10n::$locales['No todo matches the filter.'] = 'Aucune tâche ne correspond au filtre.';
 L10n::$locales['No todo selected.'] = 'Aucune tâche sélectionnée.';
+L10n::$locales['One todo to do'] = [
+	'Une tâche à faire',
+	'%d tâches à faire',
+];
 L10n::$locales['Rename'] = 'Renommer';
 L10n::$locales['Rename a list'] = 'Renommer une liste';
 L10n::$locales['Reopen'] = 'Rouvrir';

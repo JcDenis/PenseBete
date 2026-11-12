@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\PenseBete;
 
-use ArrayObject;
 use Dotclear\App;
 use Dotclear\Core\Backend\Menus;
-use Dotclear\Core\Backend\UserPrefFilter;
 use Dotclear\Helper\Process\TraitProcess;
 
 /**
@@ -34,20 +32,10 @@ class Backend
 
         My::addBackendMenuItem(Menus::MENU_BLOG);
 
-        // Display options of the todos list (sort and number per page), also set from user preferences
-        App::behavior()->addBehavior('adminFiltersListsV3', function (ArrayObject $filters): string {
-            $filters->append(new UserPrefFilter(
-                My::id(),
-                My::name(),
-                ManageVars::sortbyCombo(),
-                ManageVars::SORTBY,
-                'desc',
-                __('todos per page'),
-                ManageVars::PER_PAGE
-            ));
-
-            return '';
-        });
+        App::behavior()->addBehaviors([
+            'adminFiltersListsV3'       => BackendBehaviors::adminFiltersListsV3(...),
+            'adminDashboardFavoritesV2' => BackendBehaviors::adminDashboardFavoritesV2(...),
+        ]);
 
         return true;
     }
