@@ -18,7 +18,9 @@ Nothing is shown on the public side of the blog.
 With the plugin [ClaudetteMcp](https://github.com/JcDenis/ClaudetteMcp), an AI assistant connected to the blog
 can read and complete the lists.
 
-**This is an early version.** See [CONCEPTION.md](CONCEPTION.md) (in French) for the design.
+**This is an early version.** See [CONCEPTION.md](https://github.com/JcDenis/PenseBete/blob/master/CONCEPTION.md) (in French) for the design.
+
+A user guide with screenshots is available in French: [guide d'utilisation](https://github.com/JcDenis/PenseBete/blob/master/docs/fr/utilisation.md).
 
 ## REQUIREMENTS
 
@@ -63,6 +65,7 @@ ClaudetteMcp is not required. After installing or updating _PenseBete_, reconnec
 ## LINKS
 
 * [License](https://github.com/JcDenis/PenseBete/blob/master/LICENSE)
+* [User guide (in French)](https://github.com/JcDenis/PenseBete/blob/master/docs/fr/utilisation.md)
 * [Packages & details](https://github.com/JcDenis/PenseBete/releases)
 * [Issues & security](https://github.com/JcDenis/PenseBete/issues)
 
