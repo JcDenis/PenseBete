@@ -139,7 +139,7 @@ class ManageTodo
             ])
             ->render();
 
-        App::backend()->page()->helpBlock(My::id());
+        App::backend()->page()->helpBlock(My::id() . '-todo');
 
         App::backend()->page()->closeModule();
     }

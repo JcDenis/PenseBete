@@ -113,7 +113,7 @@ class ManageRename
             ])
             ->render();
 
-        App::backend()->page()->helpBlock(My::id());
+        App::backend()->page()->helpBlock(My::id() . '-rename');
 
         App::backend()->page()->closeModule();
     }
