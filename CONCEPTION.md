@@ -1,7 +1,8 @@
 # PenseBete — Conception
 
 Document de conception du plugin Dotclear **PenseBete**.
-État au 13 novembre 2026 : version 0.1, étapes 1 à 3 codées (le plugin, sa liaison avec ClaudetteMcp, le tableau de bord).
+État au 14 novembre 2026 : version 0.2, étapes 1 à 3 codées (le plugin, sa liaison avec ClaudetteMcp, le tableau de bord),
+guide d'utilisation en français dans `docs/fr/`. Les consignes de travail pour les assistants IA sont dans `CLAUDE.md`.
 
 ## Objectif
 
