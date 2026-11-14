@@ -314,15 +314,15 @@ class Manage
                     ->title(__('Edit this todo'))
                     ->text(Html::escapeHTML($todo->title)),
             ];
+
+            $row = (new Tr('todo_' . $todo->id))
+                ->class($todo->isDone() ? ['line', 'offline'] : 'line');
             if ($todo->note !== '') {
-                $note    = trim((string) preg_replace('/\s+/u', ' ', $todo->note));
-                $title[] = (new Note())
-                    ->class('form-note')
-                    ->text(Html::escapeHTML(mb_strlen($note) > 160 ? mb_substr($note, 0, 160) . '…' : $note));
+                // Details are shown by the expand button of the line, as on the posts list
+                $row->data(['note' => Html::escapeHTML($todo->note)]);
             }
 
-            $rows[] = (new Tr('todo_' . $todo->id))
-                ->class($todo->isDone() ? ['line', 'offline'] : 'line')
+            $rows[] = $row
                 ->cols([
                     (new Td())
                         ->class(['nowrap', 'minimal'])

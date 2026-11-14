@@ -14,6 +14,32 @@ dotclear.ready(() => {
     }
     dotclear.condSubmit('#todos-form td input[type="checkbox"]', '#todos-form #do-action');
 
+    // Details of todos, shown by the expand buttons as on the posts list
+    dotclear.expandContent({
+      line: form.querySelector('#todos thead tr'),
+      lines: form.querySelectorAll('#todos tbody tr.line[data-note]'),
+      callback: (line) => {
+        const target = dotclear.node(line);
+        const id = `${target.id}_note`;
+        let tr = document.getElementById(id);
+        if (tr) {
+          tr.style.display = tr.style.display === 'none' ? '' : 'none';
+          target.classList.toggle('expand');
+          return;
+        }
+        tr = document.createElement('tr');
+        tr.id = id;
+        const td = document.createElement('td');
+        td.colSpan = target.children.length;
+        td.className = 'expand';
+        td.style.whiteSpace = 'pre-line';
+        td.textContent = target.dataset.note;
+        tr.appendChild(td);
+        target.classList.add('expand');
+        target.parentNode.insertBefore(tr, target.nextSibling);
+      },
+    });
+
     // Headers in cells on small screens
     dotclear.responsiveCellHeaders(form.querySelector('#todos'), '#todos', 1, true);
 

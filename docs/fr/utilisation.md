@@ -53,7 +53,8 @@ La page du plugin affiche les tâches à faire du blog, les dernières modifiée
 ![La page du plugin](img/liste.png)
 
 * Le titre de chaque tâche mène à sa page de modification, et le nom de sa liste affiche toutes les tâches de cette liste.
-* Les détails sont affichés sous le titre.
+* La flèche au début d'une ligne déplie les détails de la tâche, quand elle en a. La flèche de l'en-tête du tableau
+  les déplie ou les replie tous, comme sur la liste des billets.
 * Le bouton **Fait** de la colonne _État_ marque tout de suite la tâche comme faite. Sur une tâche faite,
   le bouton **Rouvrir** la remet à faire.
 * Le bouton vert **Nouvelle tâche**, en haut à droite, ouvre le formulaire d'ajout.
