@@ -22,7 +22,7 @@ $this->registerModule(
     'Todo lists',
     'Keep lists of things to do in the blog administration',
     'Jean-Christian Paul Denis and Contributors',
-    '0.1',
+    '0.2',
     [
         'requires' => [
             ['php', '8.3'],

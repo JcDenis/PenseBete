@@ -1,3 +1,9 @@
+PenseBete 0.2 - 2026.11.14
+===========================================================
+* Add a user guide in French, with screenshots
+* Shorten the admin help and give each page its own help
+* Show todo details with expand buttons, as on the posts list
+
 PenseBete 0.1 - 2026.11.13
 ===========================================================
 * First release
