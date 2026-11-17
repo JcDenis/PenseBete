@@ -22,7 +22,7 @@ $this->registerModule(
     'Todo lists',
     'Keep lists of things to do in the blog administration',
     'Jean-Christian Paul Denis and Contributors',
-    '0.2',
+    '0.3',
     [
         'requires' => [
             ['php', '8.3'],
@@ -33,6 +33,6 @@ $this->registerModule(
         'support'     => 'https://github.com/JcDenis/' . $this->id . '/issues',
         'details'     => 'https://github.com/JcDenis/' . $this->id . '/blob/master/README.md',
         'repository'  => 'https://raw.githubusercontent.com/JcDenis/' . $this->id . '/master/dcstore.xml',
-        'date'        => '2026-11-14T10:23:19+00:00',
+        'date'        => '2026-11-17T20:05:37+00:00',
     ]
 );
