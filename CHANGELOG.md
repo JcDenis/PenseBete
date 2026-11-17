@@ -1,7 +1,6 @@
 PenseBete 0.3 - 2026.11.17
 ===========================================================
-* [docs] Add CLAUDE.md for AI assistants
-* [docs] Give a fallback to read the shared conventions
+* [fix] Details link of the module on GitHub
 
 PenseBete 0.2 - 2026.11.14
 ===========================================================
