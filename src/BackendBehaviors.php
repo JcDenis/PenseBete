@@ -82,6 +82,18 @@ class BackendBehaviors
     }
 
     /**
+     * Optional columns of the todos list, chosen in user preferences.
+     *
+     * @param   ArrayObject<string, mixed>  $cols   The columns of the lists
+     */
+    public static function adminColumnsListsV2(ArrayObject $cols): string
+    {
+        $cols[My::id()] = [My::name(), ManageVars::columns()];
+
+        return '';
+    }
+
+    /**
      * Favorite: users choose to put it in their menu and on their dashboard from their preferences.
      */
     public static function adminDashboardFavoritesV2(Favorites $favs): string

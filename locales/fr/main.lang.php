@@ -68,6 +68,7 @@ L10n::$locales['Todo successfully updated.'] = 'Tâche mise à jour.';
 L10n::$locales['Unknown action.'] = 'Action inconnue.';
 L10n::$locales['Unknown status.'] = 'État inconnu.';
 L10n::$locales['Updated'] = 'Modifiée le';
+L10n::$locales['Created'] = 'Créée le';
 L10n::$locales['You must give the name of the list.'] = 'Vous devez indiquer le nom de la liste.';
 L10n::$locales['You must give the new name of the list.'] = 'Vous devez indiquer le nouveau nom de la liste.';
 L10n::$locales['You must say what there is to do.'] = 'Vous devez indiquer ce qu\'il y a à faire.';

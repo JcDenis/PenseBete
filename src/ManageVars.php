@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Dotclear\Plugin\PenseBete;
 
+use ArrayObject;
+use Dotclear\App;
 use Dotclear\Core\Backend\Filter\Filters;
 use Dotclear\Core\Backend\Filter\FiltersLibrary;
+use Dotclear\Helper\Html\Form\Component;
 use Dotclear\Helper\Html\Html;
 use Dotclear\Helper\Stack\Filter;
 
@@ -191,6 +194,39 @@ class ManageVars
             __('Todo')          => 'todo_title',
             __('List')          => 'todo_list',
         ];
+    }
+
+    /**
+     * Get the optional columns of the todos list, chosen in user preferences.
+     *
+     * The first column (todo title) and the last one (status and its button) are always shown.
+     *
+     * @return  array<string, array{bool, string}>  The columns: ID => [shown by default, title]
+     */
+    public static function columns(): array
+    {
+        return [
+            'list'    => [true, __('List')],
+            'updated' => [true, __('Updated')],
+            'created' => [false, __('Created')],
+            'author'  => [true, __('Author')],
+        ];
+    }
+
+    /**
+     * Keep only the optional columns chosen by the user, in the order chosen by the user.
+     *
+     * @param   array<string, Component>    $cols   The optional columns, by ID
+     *
+     * @return  array<int, Component>
+     */
+    public static function userColumns(array $cols): array
+    {
+        /** @var ArrayObject<string, mixed> $user_cols */
+        $user_cols = new ArrayObject($cols);
+        App::backend()->userPref()->getUserColumns(My::id(), $user_cols);
+
+        return array_values(array_filter($user_cols->getArrayCopy(), fn (mixed $col): bool => $col instanceof Component));
     }
 
     /**

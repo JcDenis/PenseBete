@@ -188,6 +188,9 @@ msgstr "État inconnu."
 msgid "Updated"
 msgstr "Modifiée le"
 
+msgid "Created"
+msgstr "Créée le"
+
 msgid "You must give the name of the list."
 msgstr "Vous devez indiquer le nom de la liste."
 

@@ -334,20 +334,25 @@ class Manage
                     (new Td())
                         ->class('maximal')
                         ->items($title),
-                    (new Td())
-                        ->class('nowrap')
-                        ->items([
-                            (new Link())
-                                ->href(My::manageUrl(['list' => $todo->list, ... ($vars->status === '' ? [] : ['status' => $vars->status])]))
-                                ->title(__('Show this list'))
-                                ->text(Html::escapeHTML($todo->list)),
-                        ]),
-                    (new Td())
-                        ->class('nowrap')
-                        ->text(Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->updated, $user_tz))),
-                    (new Td())
-                        ->class('nowrap')
-                        ->text(Html::escapeHTML($todo->user)),
+                    ... ManageVars::userColumns([
+                        'list' => (new Td())
+                            ->class('nowrap')
+                            ->items([
+                                (new Link())
+                                    ->href(My::manageUrl(['list' => $todo->list, ... ($vars->status === '' ? [] : ['status' => $vars->status])]))
+                                    ->title(__('Show this list'))
+                                    ->text(Html::escapeHTML($todo->list)),
+                            ]),
+                        'updated' => (new Td())
+                            ->class('nowrap')
+                            ->text(Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->updated, $user_tz))),
+                        'created' => (new Td())
+                            ->class('nowrap')
+                            ->text(Html::escapeHTML(Date::dt2str(__('%Y-%m-%d %H:%M'), $todo->created, $user_tz))),
+                        'author' => (new Td())
+                            ->class('nowrap')
+                            ->text(Html::escapeHTML($todo->user)),
+                    ]),
                     (new Td())
                         ->class(['nowrap', 'status'])
                         ->items([
@@ -392,9 +397,11 @@ class Manage
                                     (new Tr())
                                         ->cols([
                                             (new Th())->text(__('Todo'))->scope('col')->colspan(2)->class('first'),
-                                            (new Th())->text(__('List'))->scope('col'),
-                                            (new Th())->text(__('Updated'))->scope('col'),
-                                            (new Th())->text(__('Author'))->scope('col'),
+                                            // Optional columns, chosen in user preferences
+                                            ... ManageVars::userColumns(array_map(
+                                                fn (array $col): Th => (new Th())->text($col[1])->scope('col'),
+                                                ManageVars::columns()
+                                            )),
                                             (new Th())->text(__('Status'))->scope('col'),
                                         ]),
                                 ]))
