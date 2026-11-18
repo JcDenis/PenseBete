@@ -22,8 +22,10 @@ Required Dotclear and PHP versions: see `_define.php`.
 * `src/Install.php`: table structure. A change of the table needs a migration there.
 * `src/Prepend.php`: permission type `PenseBete` ("manage todo lists"). `My::isAllowed()` checks it on the current blog.
 * `src/Manage.php` (list, filters, actions on selected todos, quick buttons), `ManageTodo.php` (add and edit form),
-  `ManageRename.php` (rename or merge lists), `ManageVars.php` (filters and display options); `js/manage.js`.
-* `src/BackendBehaviors.php`: filters options (`adminFiltersListsV3`), dashboard favorite with the number of todos to do,
+  `ManageRename.php` (rename or merge lists), `ManageVars.php` (filters and display options,
+  optional columns `ManageVars::columns()`); `js/manage.js`.
+* `src/BackendBehaviors.php`: filters options (`adminFiltersListsV3`), optional columns of the list in user preferences
+  (`adminColumnsListsV2`, type `PenseBete`; title and status columns are always shown), dashboard favorite with the number of todos to do,
   dashboard module of the last todos and its user preferences (namespace `PenseBete`).
 * `src/ClaudetteMcp/`: tools `list_todos`, `add_todo`, `update_todo` (`TodoTool.php` holds the shared checks),
   registered in `src/Frontend.php` with the behavior `ClaudetteMcpAddTool`.
