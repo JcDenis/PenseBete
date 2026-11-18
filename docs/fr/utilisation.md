@@ -60,6 +60,16 @@ La page du plugin affiche les tâches à faire du blog, les dernières modifiée
 * Le bouton vert **Nouvelle tâche**, en haut à droite, ouvre le formulaire d'ajout.
 * Le bouton **Renommer une liste** ouvre le formulaire de renommage.
 
+### Choisir les colonnes affichées
+
+Les colonnes _Liste_, _Modifiée le_ et _Auteur·rice_ sont affichées par défaut, la colonne _Créée le_ ne l'est pas.
+Chaque personne choisit ses colonnes dans ses **Préférences**, onglet _Mes options_, rubrique
+_Colonnes optionnelles affichées dans les listes_, partie **Pense-bête**, comme pour les billets ou les pages :
+cochez les colonnes voulues, et faites-les glisser pour changer leur ordre. Les colonnes _Tâche_ et _État_
+sont toujours affichées.
+
+![Les colonnes du pense-bête dans les préférences](img/colonnes.png)
+
 ## Ajouter une tâche
 
 ![Le formulaire d'ajout](img/nouvelle-tache.png)
