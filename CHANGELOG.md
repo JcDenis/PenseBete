@@ -1,3 +1,9 @@
+PenseBete 0.3.1 - 2026.11.23
+===========================================================
+* [new] Choose the optional columns of the todos list in user preferences
+* [new] Family of the ClaudetteMcp tools, for the keys limited to some families
+* [docs] Explain how to choose the columns of the todos list
+
 PenseBete 0.3 - 2026.11.17
 ===========================================================
 * [fix] Details link of the module on GitHub
