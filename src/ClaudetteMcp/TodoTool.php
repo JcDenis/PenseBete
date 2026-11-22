@@ -42,6 +42,14 @@ abstract class TodoTool extends McpTool
     ];
 
     /**
+     * Family of tools for the keys of ClaudetteMcp (string, not constant: older ClaudetteMcp versions have none).
+     */
+    public function family(): string
+    {
+        return 'extras';
+    }
+
+    /**
      * Like in backend: the user must have the permission of the plugin on the blog.
      */
     public function available(): bool
