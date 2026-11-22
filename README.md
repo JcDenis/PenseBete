@@ -60,7 +60,7 @@ The assistant acts with the permissions of the user of the key: this user needs 
 Writing tools are not available with a read only key.
 No tool deletes a todo: asked to delete one, the assistant marks it as done, and deleting is done from the blog administration.
 
-ClaudetteMcp is not required. After installing or updating _PenseBete_, reconnect the connector of the assistant to validate the new tools.
+ClaudetteMcp is optional (version 0.5 or later). After installing or updating _PenseBete_, reconnect the connector of the assistant to validate the new tools.
 
 ## LINKS
 

@@ -27,6 +27,7 @@ $this->registerModule(
         'requires' => [
             ['php', '8.3'],
             ['core', '2.40'],
+            ['ClaudetteMcp?', '0.5'], // optional: tools for an AI assistant
         ],
         'permissions' => 'My',
         'type'        => 'plugin',
